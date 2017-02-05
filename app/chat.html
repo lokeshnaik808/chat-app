@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body bgcolor="#e6e6fa">
+<script src="socket.io.js"></script>
+<section class="module">
+    <header class="top_bar">
+        <h1>Chat.io</h1>
+    </header>
+
+    <ol class="conversation" id="convo">
+        <li class="self">
+            <div class="message">
+                <p>How are you</p>
+            </div>
+        </li>
+        <li class="other">
+            <div class="message">
+                <p>I am fine</p>
+            </div>
+        </li>
+    </ol>
+</section>
+<div class="bottom_bar">
+    <label>Enter your message:</label>
+    <input type="text" name="message" id="special">
+    <input type="button" name="send" value="Send!!" onclick="send()">
+    <input type="text" name="name" id="name">
+    <input type="button" name="name_click" onclick="getname()" value="My Name">
+    <p id="has_name">No name given</p>
+</div>
+<script type="text/javascript">
+    var name;
+    var socket=io.connect("http://192.168.43.208:5000");
+        function getname() {
+            var p_has_name=document.getElementById('has_name');
+            name = document.getElementById('name').value;
+            if(name.length!=0){
+                p_has_name.innerHTML='You have a name!';
+            }
+            else
+            {
+                p_has_name.innerHTML='No name given';
+            }
+        }
+
+        function send() {
+            if(!name){
+                alert('Please enter a name first');
+            }
+            else {
+                var message2 = document.getElementById('special').value;
+                var new_li = document.createElement('li');
+                new_li.className = 'self';
+                var new_div = document.createElement('div');
+                new_div.className = 'message';
+                new_li.appendChild(new_div);
+                var inner_p = document.createElement('p');
+                inner_p.innerHTML = message2;
+                new_div.appendChild(inner_p);
+                var ol = document.getElementById('convo');
+                ol.appendChild(new_li);
+                socket.emit('msg', {actual: message2, sender: name});
+            }
+            }
+
+        socket.on('msg_callback', function (msg_cb) {
+
+            var new_li1 = document.createElement('li');
+            new_li1.className = 'other';
+            var new_div1 = document.createElement('div');
+            new_div1.className = 'message';
+            new_li1.appendChild(new_div1);
+            var inner_p1 = document.createElement('p');
+            inner_p1.innerHTML =msg_cb.sender1+' : '+msg_cb.actual1;
+            new_div1.appendChild(inner_p1);
+            var ol1 = document.getElementById('convo');
+            ol1.appendChild(new_li1);
+        });
+</script>
+<style type="text/css">
+    .bottom_bar {
+        border-style: solid;
+        position: fixed;
+        left: 0px;
+        bottom: 0px;
+        background-color: #2F6FAD;
+        opacity: 1;
+        width: 100%;
+    }
+    .bottom_bar label {
+        padding: 10px;
+        color: brown;
+    }
+    .top_bar {
+        background: radial-gradient(#999999, #000000);
+        position: relative;
+        overflow: hidden;
+        opacity: 0.25;
+    }
+    .top_bar h1 {
+        color: white;
+        left: 50px;
+        text-align: center;
+    }
+    .self {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        border-bottom-right-radius: 10px;
+    }
+    .other {
+        display: flex;
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+    .message {
+        border: hidden;
+        border-color: #999999;
+        background-color: floralwhite;
+        box-shadow: 1px 1px 2px;
+    }
+    .message p {
+        padding: 3px;
+    }
+    .module {
+        overflow: auto;
+    }
+    #has_name {
+        color: blue;
+    }
+</style>
+</body>
+</html>

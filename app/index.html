@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="socket.io.js"></script>
+<script type="text/javascript">
+    function redirect(){
+        window.open('sign_up.html');
+    }
+</script>
+<fieldset>
+    <form action="/login" method="post">
+<label>log-In</label><input type="radio" name="log_in" checked>
+<label>Sign-up</label><input type="radio" name="sign_up" onclick="redirect()"><br><br>
+<label>Username </label><input type="text" name="log_username"><br><br>
+<label>Password </label><input type="password" name="log_password"><br>
+<input type="submit" value="Log-In"></form>
+</fieldset>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    function redir(){
+        window.location('index.html');
+    }
+</script>
+<fieldset>
+    <form action="/sign_up" method="post">
+<label>log-In  </label><input type="radio" name="log_in" onclick="redir()">
+<label>Sign-up  </label><input type="radio" name="sign_up" checked><br><br>
+<label>Username  </label><input type="text" name="new_username"><br><br>
+    <label>Password  </label><input type="password" name="new_password"><br><br>
+    <label>Name  </label><input type="text" name="new_name"><br><br>
+    <input type="submit" value="Sign-Up">
+
+</form>
+</fieldset>
+</body>
+</html>
